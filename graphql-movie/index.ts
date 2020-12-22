@@ -1,5 +1,22 @@
 import { GraphQLServer } from 'graphql-yoga';
+import resolvers from './graphql/resolvers';
 
-const server = new GraphQLServer({});
+// GraphQL Server
+const server = new GraphQLServer({
+  typeDefs: 'graphql/schema.graphql',
+  resolvers,
+});
 
-server.start(() => console.log('GraphQL Server Start...'));
+// GraphQL Server 시작
+const options = {
+  port: 8000,
+  endpoint: '/graphql',
+  subscriptions: '/subscriptions',
+  playground: '/playground',
+};
+
+server.start(options, ({ port }) =>
+  console.log(
+    `Server started, listening on port ${port} for incoming requests.`,
+  ),
+);
